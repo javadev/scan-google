@@ -47,8 +47,9 @@ public class ScanGoogle {
         searchStrings.forEach(searchString -> {
             System.out.println("Searching " + searchString);
             List<UrlData> datas = getSearchResultForQuery(driver, searchString);
-            generateCsv(searchString + ".csv", datas);
-            System.out.println(searchString + "\n" + readFile(searchString + ".csv"));
+            String fileName = searchString.replaceAll("[^a-zA-Z0-9]", "") + ".csv";
+            generateCsv(fileName, datas);
+            System.out.println(searchString + "\n" + readFile(fileName));
         });
         //Close the browser
         driver.quit();
