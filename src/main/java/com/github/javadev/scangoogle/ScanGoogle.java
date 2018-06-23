@@ -80,7 +80,7 @@ public class ScanGoogle {
     }
 
     private static List<UrlData> getPageResult(WebDriver driver) throws Exception {
-        Thread.sleep(30000 + new Random().nextInt(10000));
+        Thread.sleep(3000 + new Random().nextInt(3000));
         // wait until the google page shows the result
         (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
