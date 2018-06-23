@@ -21,7 +21,9 @@ import org.jsoup.Jsoup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -30,7 +32,14 @@ public class ScanGoogle {
     private static final String SEARCH_WORDS_FILE_NAME = "words.csv";
 
     public static void main(String... args) throws Exception {
-        final WebDriver driver = new ChromeDriver();
+        DesiredCapabilities cap = DesiredCapabilities.phantomjs();
+        cap.setCapability(PhantomJSDriverService.PHANTOMJS_PAGE_SETTINGS_PREFIX + "userAgent",
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36");
+        cap.setCapability(PhantomJSDriverService.PHANTOMJS_PAGE_SETTINGS_PREFIX + "loadImages", false);
+        cap.setCapability(PhantomJSDriverService.PHANTOMJS_PAGE_SETTINGS_PREFIX + "javascriptEnabled", true);
+        cap.setBrowserName("chrome");
+        cap.setVersion("42");
+        final WebDriver driver = new PhantomJSDriver(cap);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> driver.quit(), "Shutdown-thread"));
 
@@ -71,7 +80,7 @@ public class ScanGoogle {
 
     private static List<UrlData> getPageResult(WebDriver driver) throws Exception {
         Thread.sleep(30000 + new Random().nextInt(10000));
-// wait until the google page shows the result
+        // wait until the google page shows the result
         (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
 
@@ -185,7 +194,7 @@ public class ScanGoogle {
             Logger.getLogger(ScanGoogle.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static <E> List<E> shuffle(final List<E> iterable) {
         final List<E> shuffled = new ArrayList<>(iterable);
         Collections.shuffle(shuffled);
