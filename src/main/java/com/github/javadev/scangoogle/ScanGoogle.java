@@ -103,7 +103,7 @@ public class ScanGoogle {
                     .validateTLSCertificates(false).timeout(10 * 1000).execute();
             return new UrlData(url, resp.contentType(),
                     ZonedDateTime.now(ZoneId.systemDefault()), resp.bodyAsBytes().length);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ScanGoogle.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new UrlData(url, "", ZonedDateTime.now(ZoneId.systemDefault()), 0L);
