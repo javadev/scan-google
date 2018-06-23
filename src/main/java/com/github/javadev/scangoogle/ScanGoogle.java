@@ -65,10 +65,14 @@ public class ScanGoogle {
             List<UrlData> result = getPageResult(driver);
 
             while (result.size() < 20 && result.size() > 0) {
-                driver.findElement(By.id("pnnext")).click();
-                List<UrlData> localResult = getPageResult(driver);
-                result.addAll(localResult);
-                if (localResult.isEmpty()) {
+                try {
+                    driver.findElement(By.id("pnnext")).click();
+                    List<UrlData> localResult = getPageResult(driver);
+                    result.addAll(localResult);
+                    if (localResult.isEmpty()) {
+                        break;
+                    }
+                } catch (org.openqa.selenium.NoSuchElementException ex) {
                     break;
                 }
             }
