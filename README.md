@@ -1,2 +1,2 @@
 # scan-google
-Scan google with htmlunit
+Scan google with selenium web driver
